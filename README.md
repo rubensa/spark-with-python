@@ -24,6 +24,8 @@ Also in **.devcontainer/devcontainer.json** change *"1000:1000"*
 
 with your current user ID (id -u) and group ID (id -g).
 
+Then you can skip **Setting up Apache Spark with Python 3 and Jupyter notebook** as those instruction are for installing everithing on your host system (with VSCode Remote Development everithing needed is installed on a Docker container).
+
 ## Apache Spark
 <a href="https://spark.apache.org/">Apache Spark</a> is one of the hottest new trends in the technology domain. It is the framework with probably the **highest potential to realize the fruit of the marriage between Big Data and Machine Learning**. It runs fast (up to 100x faster than traditional <a href="https://www.tutorialspoint.com/hadoop/hadoop_mapreduce.htm">Hadoop MapReduce</a> due to in-memory operation, offers robust, distributed, fault-tolerant data objects (called <a href="https://www.tutorialspoint.com/apache_spark/apache_spark_rdd.htm">RDD</a>), and integrates beautifully with the world of machine learning and graph analytics through supplementary packages like <a href="https://spark.apache.org/mllib/">Mlib</a> and <a href="https://spark.apache.org/graphx/">GraphX</a>.
 <br>
