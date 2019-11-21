@@ -34,7 +34,7 @@ Spark is implemented on <a href="https://hadoop.apache.org/docs/r1.2.1/hdfs_desi
 
 ## Notebooks
 ### RDD and basics
-* [SparkContext and RDD basiscs](https://github.com/rubensa/spark-with-python/blob/master/notebooks/00_SparkContext_and_RDD_asics.ipynb)
+* [SparkContext and RDD basiscs](https://github.com/rubensa/spark-with-python/blob/master/notebooks/00_SparkContext_and_RDD_Basics.ipynb)
 * [SparkContext workers lazy evaluations](https://github.com/rubensa/spark-with-python/blob/master/notebooks/01_SparkContext_Workers_Lazy_Evaluations.ipynb)
 * [RDD chaining executions](https://github.com/rubensa/spark-with-python/blob/master/notebooks/02_RDD_Chaining_Execution.ipynb)
 * [Word count example with RDD](https://github.com/rubensa/spark-with-python/blob/master/notebooks/03_Word_Count.ipynb)
