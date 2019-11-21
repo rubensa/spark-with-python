@@ -1,0 +1,5 @@
+# Ignore everything
+**
+
+# Exceptions
+!.devcontainer/jupyter_notebook_config.py

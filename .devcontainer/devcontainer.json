@@ -1,0 +1,24 @@
+{
+    "name": "spark-with-python",
+    "context": "..",
+    "dockerFile": "Dockerfile",
+ 
+    // Uncomment the next line if you want to publish any ports.
+    // "appPort": [],
+ 
+    "postCreateCommand": "/bin/bash -i -c \"pip install pandas numpy\"",
+ 
+    "extensions": [
+        "eamodio.gitlens",
+        "ms-python.python"
+    ],
+    "settings": {
+        "python.linting.pylintEnabled": true,
+        "python.linting.enabled": true
+    },
+    "runArgs": [
+        // $(id -u):$(id -g)
+        "-u", "1000:1000"
+    ],
+    "overrideCommand": false
+}
