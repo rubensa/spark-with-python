@@ -3,5 +3,6 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
-    "python.dataScience.useDefaultConfigForJupyter": false
+    "python.dataScience.useDefaultConfigForJupyter": false,
+    "python.dataScience.runStartupCommands": "import os\\nos.environ[\"JAVA_HOME\"] = \"/opt/sdkman/candidates/java/current\""
 }
