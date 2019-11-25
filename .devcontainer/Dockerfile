@@ -4,9 +4,14 @@ FROM rubensa/ubuntu-tini-dev
 COPY .devcontainer/jupyter_notebook_config.py /home/${USER_NAME}/.jupyter/
 
 # $(id -un)
-ARG NEW_USER_NAME=rubensa
+ARG NEW_USER_NAME=
 # $(id -gn)
-ARG NEW_GROUP_NAME=rubensa
+ARG NEW_GROUP_NAME=
+
+# Use USER_NAME if no NEW_USER_NAME specified
+ENV NEW_USER_NAME=${NEW_USER_NAME:-$USER_NAME}
+# Use GROUP_NAME if no NEW_GROUP_NAME specified
+ENV NEW_GROUP_NAME=${NEW_GROUP_NAME:-$GROUP_NAME}
 
 # Tell docker that all future commands should be run as root
 USER root
@@ -31,21 +36,33 @@ RUN curl -s https://archive.apache.org/dist/spark/spark-2.3.2/spark-2.3.2-bin-ha
     # Configure spark for the non-root user
     && printf "\nexport SPARK2_HOME=/opt/spark\nexport PATH=\$PATH:\$SPARK2_HOME/bin\n" >> /home/${USER_NAME}/.bashrc \
     #
+    # Jupyter config
+    && chown -R ${USER_NAME}:${GROUP_NAME} /home/${USER_NAME}/.jupyter \
+    #
     # Custom username
-    && usermod -l ${NEW_USER_NAME} -d /home/${NEW_USER_NAME} -m ${USER_NAME} \
+    && if [ "${NEW_USER_NAME}" != "${USER_NAME}" ]; \
+      then \
+      usermod -l ${NEW_USER_NAME} -d /home/${NEW_USER_NAME} -m ${USER_NAME}; \
+      # Add sudo support for new user
+      # FIX: Filename under /etc/sudoers.d doesn't support periods.  Do it the hacky way...
+      FILENAME="$( echo $NEW_USER_NAME | tr  '.' '_'  )"; \
+      echo "${NEW_USER_NAME} ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/${FILENAME}; \
+      chmod 0440 /etc/sudoers.d/${FILENAME}; \
+      # Revome old user sudo support
+      rm /etc/sudoers.d/${USER_NAME}; \
+    fi \
     #
     # Custom groupname
-    && groupmod -n ${NEW_GROUP_NAME} ${GROUP_NAME} \
-    #
-    # Jupyter config
-    && chown -R ${NEW_USER_NAME}:${NEW_GROUP_NAME} /home/${NEW_USER_NAME}/.jupyter \
-    #
-    # Add sudo support for new user
-    && echo "${NEW_USER_NAME} ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/${NEW_USER_NAME} \
-    && chmod 0440 /etc/sudoers.d/${NEW_USER_NAME} \
+    && if [ "${NEW_GROUP_NAME}" != "${GROUP_NAME}" ]; \
+      then \
+      # groupmod -n ${NEW_GROUP_NAME} ${GROUP_NAME}; \
+      # FIX: groupmod doesn't support spaces in group name.  Do it the hacky way...
+      sed -i 's/^'"$GROUP_NAME"':/'"$NEW_GROUP_NAME"':/g' /etc/group; \
+    fi \
     #
     # Update fixuid config
     && printf "user: ${NEW_USER_NAME}\ngroup: ${NEW_GROUP_NAME}\npaths:\n  - /home/${NEW_USER_NAME}" > /etc/fixuid/config.yml
+
 
 ENV USER_NAME=${NEW_USER_NAME}
 ENV GROUP_NAME=${NEW_GROUP_NAME}

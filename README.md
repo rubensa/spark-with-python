@@ -7,22 +7,22 @@ If you want to run this on VSCode you need to install:
   * [VSCode](https://code.visualstudio.com/)
   * [VSCode Remote Development Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
 
-and need to setup **.devcontainer/Dockerfile** changing *"rubensa"*
-
-```Dockerfile
-ARG NEW_USER_NAME=rubensa
-ARG NEW_GROUP_NAME=rubensa
-```
-
-with your current user (id -un) and group names (id -gn).
-
-Also in **.devcontainer/devcontainer.json** change *"1000:1000"*
+In order for the files you create inside the Docker container belongs to you, you need to change *"1000:1000"* in **.devcontainer/devcontainer.json**
 
 ```json
 "-u", "1000:1000"
 ```
 
 with your current user ID (id -u) and group ID (id -g).
+
+If you want to use a custom username and groupname inside the container (not really needed) you can set **.devcontainer/Dockerfile**
+
+```Dockerfile
+ARG NEW_USER_NAME=
+ARG NEW_GROUP_NAME=
+```
+
+with your current user (id -un) and group names (id -gn).
 
 Then you can skip **Setting up Apache Spark with Python 3 and Jupyter notebook** as those instruction are for installing everithing on your host system (with VSCode Remote Development everithing needed is installed on a Docker container).
 
