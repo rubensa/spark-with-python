@@ -6,7 +6,7 @@
     // Uncomment the next line if you want to publish any ports.
     // "appPort": [],
  
-    "postCreateCommand": "/bin/bash -i -c \"pip install pandas numpy\"",
+    "postCreateCommand": "/bin/bash -i -c \"pip install jupyter pandas numpy\"",
  
     "extensions": [
         "eamodio.gitlens",
